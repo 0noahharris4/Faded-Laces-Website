@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0a0c0a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="FL Owner">
+<title>Faded Laces Owner Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #17e05f; --green-dk: #0fb84c; --black: #0a0c0a; --near: #121412; --card: #1a1d1a;
+  --white: #fff; --muted: #9a9f9a; --border: rgba(255,255,255,.09); --red: #ff5a5a; --amber: #ffb020;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--black); color: var(--white); font-family: Inter, system-ui, sans-serif; min-height: 100vh; }
+h1, h2 { font-family: "Bebas Neue", Inter, sans-serif; font-weight: 400; letter-spacing: .5px; }
+button, input, textarea { font: inherit; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 20px 16px 60px; }
+header.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 0 22px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand .mark { width: 40px; height: 40px; border-radius: 50%; border: 3px solid var(--green); display: grid; place-items: center; font-family: "Bebas Neue"; font-size: 22px; }
+.brand b { display: block; font-family: "Bebas Neue"; font-size: 24px; line-height: 1; letter-spacing: 1px; }
+.brand small { color: var(--green); font-size: 11px; font-weight: 700; letter-spacing: 2px; }
+.who { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 13px; }
+.btn { border: none; border-radius: 999px; padding: 12px 22px; font-weight: 700; cursor: pointer; transition: background .15s, opacity .15s; }
+.btn-primary { background: var(--green); color: var(--black); }
+.btn-primary:hover { background: var(--green-dk); }
+.btn-ghost { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,.25); }
+.btn-ghost:hover { border-color: var(--green); color: var(--green); }
+.btn-sm { padding: 8px 14px; font-size: 13px; }
+.btn:disabled { opacity: .5; cursor: default; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 22px; }
+label { display: block; font-size: 12px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); margin: 18px 0 8px; }
+label:first-child { margin-top: 0; }
+.field { width: 100%; background: var(--black); border: 1px solid var(--border); color: var(--white); border-radius: 10px; padding: 12px 14px; font-size: 15px; }
+.field:focus { outline: none; border-color: var(--green); }
+textarea.field { resize: vertical; min-height: 120px; line-height: 1.5; }
+.hint { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; color: var(--muted); margin-top: 6px; }
+.hint .over { color: var(--red); font-weight: 700; }
+.opt { color: var(--muted); font-weight: 500; text-transform: none; letter-spacing: 0; }
+.msg { border-radius: 10px; padding: 12px 14px; font-size: 14px; line-height: 1.45; margin-top: 14px; }
+.msg.ok { background: rgba(23,224,95,.1); border: 1px solid rgba(23,224,95,.4); }
+.msg.err { background: rgba(255,90,90,.1); border: 1px solid rgba(255,90,90,.45); }
+.msg.warn { background: rgba(255,176,32,.1); border: 1px solid rgba(255,176,32,.45); }
+[hidden] { display: none !important; }
+
+/* Sign in */
+.signin { max-width: 420px; margin: 8vh auto 0; }
+.signin h1 { font-size: 44px; line-height: 1; margin-bottom: 6px; }
+.signin p { color: var(--muted); font-size: 15px; line-height: 1.5; margin-bottom: 18px; }
+.signin .btn { width: 100%; margin-top: 16px; }
+.forgot { color: var(--muted); font-size: 13px; margin: 14px 0 0; text-align: center; }
+.linkbtn { background: none; border: none; color: var(--green); font-weight: 600; cursor: pointer; margin-top: 14px; font-size: 14px; }
+
+/* Compose layout */
+.grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 22px; align-items: start; }
+.reach { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted); margin-bottom: 18px; }
+.reach b { color: var(--white); font-size: 20px; font-family: "Bebas Neue"; letter-spacing: 1px; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
+.photo-drop { border: 1.5px dashed rgba(255,255,255,.2); border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 14px; cursor: pointer; }
+.photo-drop:hover { border-color: var(--green); }
+.photo-drop img { width: 64px; height: 64px; object-fit: cover; border-radius: 8px; }
+.photo-drop span { font-size: 14px; color: var(--muted); }
+.actions { display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
+.actions .btn-primary { flex: 1; min-width: 180px; }
+
+/* Preview */
+.preview h2 { font-size: 24px; margin-bottom: 4px; }
+.preview .sub { color: var(--muted); font-size: 13px; margin-bottom: 14px; }
+.lock { background: linear-gradient(160deg, #1c2a22, #0b120e 55%, #050806); border-radius: 26px; padding: 22px 14px 26px; border: 1px solid var(--border); }
+.lock .time { text-align: center; font-size: 46px; font-weight: 300; letter-spacing: -1px; margin: 4px 0 18px; color: rgba(255,255,255,.9); }
+.notif { background: rgba(245,245,245,.16); backdrop-filter: blur(12px); border-radius: 18px; padding: 11px 12px; display: grid; grid-template-columns: 34px 1fr; gap: 10px; }
+.notif .ic { width: 34px; height: 34px; border-radius: 9px; background: #000; border: 2px solid var(--green); display: grid; place-items: center; font-family: "Bebas Neue"; font-size: 17px; }
+.notif .row1 { display: flex; justify-content: space-between; font-size: 12px; color: rgba(255,255,255,.65); }
+.notif .t { font-weight: 700; font-size: 14px; margin-top: 1px; word-break: break-word; }
+.notif .b { font-size: 14px; line-height: 1.35; color: rgba(255,255,255,.88); display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; }
+.notif img { grid-column: 1 / -1; width: 100%; border-radius: 10px; max-height: 180px; object-fit: cover; }
+.news { margin-top: 16px; }
+.news .lbl { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: var(--green); margin-bottom: 8px; }
+.news .item { background: var(--near); border: 1px solid var(--border); border-radius: 14px; padding: 14px; }
+.news .item img { width: 100%; border-radius: 10px; margin-bottom: 10px; max-height: 220px; object-fit: cover; }
+.news .item h3 { font-family: "Bebas Neue"; font-weight: 400; font-size: 22px; letter-spacing: .5px; }
+.news .item p { color: var(--muted); font-size: 14px; line-height: 1.5; margin-top: 4px; white-space: pre-wrap; word-break: break-word; }
+.news .item .go { display: inline-block; margin-top: 10px; color: var(--green); font-weight: 700; font-size: 14px; }
+.placeholder { color: rgba(255,255,255,.4); }
+
+/* History */
+.history { margin-top: 30px; }
+.history h2 { font-size: 30px; margin-bottom: 12px; }
+.h-item { display: grid; grid-template-columns: 56px 1fr auto; gap: 14px; align-items: center; padding: 14px 0; border-top: 1px solid var(--border); }
+.h-item .thumb { width: 56px; height: 56px; border-radius: 10px; background: var(--near); object-fit: cover; display: grid; place-items: center; color: var(--muted); }
+.h-item b { display: block; font-size: 15px; word-break: break-word; }
+.h-item p { color: var(--muted); font-size: 13px; margin-top: 3px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; word-break: break-word; }
+.h-item small { color: var(--muted); font-size: 12px; }
+.empty { color: var(--muted); padding: 18px 0; border-top: 1px solid var(--border); }
+
+/* Confirm sheet */
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); display: grid; place-items: center; padding: 16px; z-index: 50; }
+.sheet { background: var(--card); border: 1px solid rgba(23,224,95,.35); border-radius: 18px; padding: 24px; max-width: 420px; width: 100%; }
+.sheet h2 { font-size: 30px; margin-bottom: 6px; }
+.sheet p { color: var(--muted); line-height: 1.5; font-size: 15px; }
+.sheet .actions .btn { flex: 1; }
+
+@media (max-width: 820px) {
+  .grid { grid-template-columns: 1fr; }
+  .who span { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><div class="mark">F</div><div><b>FADED LACES</b><small>OWNER DASHBOARD</small></div></div>
+    <div class="who" id="who" hidden><span id="whoEmail"></span><button class="btn btn-ghost btn-sm" id="signOut">Sign out</button></div>
+  </header>
+
+  <!-- Sign in -->
+  <section class="signin" id="signin" hidden>
+    <div class="card">
+      <h1>Sign in</h1>
+      <p id="signinText">Sign in with the shop's dashboard email and password.</p>
+      <form id="loginForm">
+        <label for="email">Email</label>
+        <input id="email" class="field" type="email" autocomplete="username" required placeholder="you@example.com">
+        <label for="password">Password</label>
+        <input id="password" class="field" type="password" autocomplete="current-password" required>
+        <button class="btn btn-primary" id="loginBtn" type="submit">Sign in</button>
+      </form>
+      <p class="forgot">Forgot the password? Contact Optima Computer Systems to reset it.</p>
+      <div id="signinMsg" class="msg" hidden></div>
+    </div>
+  </section>
+
+  <!-- Dashboard -->
+  <section id="app" hidden>
+    <div class="grid">
+      <div class="card">
+        <div class="reach"><span class="dot"></span><span><b id="reachCount">–</b> phones will get your message</span></div>
+        <div id="weekWarn" class="msg warn" hidden style="margin:-4px 0 14px"></div>
+        <form id="compose">
+          <label for="title">Title</label>
+          <input id="title" class="field" maxlength="80" required placeholder="New Jordan 4s just dropped">
+          <div class="hint"><span>Shown in bold on the notification.</span><span id="titleCount">0/80</span></div>
+
+          <label for="body">Message</label>
+          <textarea id="body" class="field" maxlength="1000" required placeholder="Sizes 8–13 in stock now. Come through before they're gone."></textarea>
+          <div class="hint"><span>The first ~150 characters show on the lock screen. The rest shows in the app.</span><span id="bodyCount">0/1000</span></div>
+
+          <label for="link">Link <span class="opt">(optional)</span></label>
+          <input id="link" class="field" type="url" placeholder="https://fadedlaces.com">
+          <div class="hint"><span>Tapping the message in the app opens this link, for example booking or a product.</span></div>
+
+          <label>Photo <span class="opt">(optional)</span></label>
+          <div class="photo-drop" id="photoDrop" role="button" tabindex="0">
+            <img id="photoThumb" alt="" hidden>
+            <span id="photoText">Add a photo, like the new shoes or a flyer</span>
+          </div>
+          <input type="file" id="photo" accept="image/jpeg,image/png,image/webp" hidden>
+          <button type="button" class="linkbtn" id="removePhoto" hidden>Remove photo</button>
+
+          <div class="actions">
+            <button class="btn btn-primary" type="submit" id="sendBtn">Send to customers</button>
+            <button class="btn btn-ghost" type="button" id="clearBtn">Clear</button>
+          </div>
+          <div id="composeMsg" class="msg" hidden></div>
+        </form>
+      </div>
+
+      <div class="preview">
+        <h2>Preview</h2>
+        <div class="sub">What customers will see</div>
+        <div class="lock">
+          <div class="time" id="pvTime">9:41</div>
+          <div class="notif">
+            <div class="ic">F</div>
+            <div>
+              <div class="row1"><span>FADED LACES</span><span>now</span></div>
+              <div class="t" id="pvTitle"><span class="placeholder">Your title</span></div>
+              <div class="b" id="pvBody"><span class="placeholder">Your message</span></div>
+            </div>
+            <img id="pvImg" alt="" hidden>
+          </div>
+        </div>
+        <div class="news">
+          <div class="lbl">IN THE APP'S NEWS SCREEN</div>
+          <div class="item">
+            <img id="pvNewsImg" alt="" hidden>
+            <h3 id="pvNewsTitle" class="placeholder">Your title</h3>
+            <p id="pvNewsBody" class="placeholder">Your message</p>
+            <span class="go" id="pvNewsLink" hidden>Open link →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="history">
+      <h2>Sent messages</h2>
+      <div id="historyList"><div class="empty">Loading…</div></div>
+    </div>
+  </section>
+</div>
+
+<!-- Confirm -->
+<div class="overlay" id="confirm" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <h2 id="confirmTitle">Send it?</h2>
+    <p id="confirmText"></p>
+    <div class="actions">
+      <button class="btn btn-ghost" id="confirmNo" type="button">Cancel</button>
+      <button class="btn btn-primary" id="confirmYes" type="button">Send</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+/* ===== Settings ===== */
+const SUPABASE_URL = "https://zrjxmmozwhspkcfgktiq.supabase.co";
+const SUPABASE_KEY = "sb_publishable_gP9zNXvJtQFDFQCBDV7CpA_xF_xvXRc"; // publishable key: safe to be public
+const BUCKET = "announcement-images";
+const WEEKLY_SOFT_LIMIT = 3;
+
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const $ = (id) => document.getElementById(id);
+let photoFile = null, photoPreviewUrl = null, sending = false;
+
+function show(el, on) { el.hidden = !on; }
+function note(el, type, text) { el.className = "msg " + type; el.textContent = text; el.hidden = false; }
+function esc(s) { return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+
+/* ===== Sign in with email + password ===== */
+$("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  $("loginBtn").disabled = true; $("loginBtn").textContent = "Signing in…";
+  const { error } = await sb.auth.signInWithPassword({ email: $("email").value.trim().toLowerCase(), password: $("password").value });
+  $("loginBtn").disabled = false; $("loginBtn").textContent = "Sign in";
+  if (error) note($("signinMsg"), "err", /invalid/i.test(error.message)
+    ? "Wrong email or password."
+    : "Couldn't sign in right now. Please try again in a minute.");
+});
+function resetSignin() { $("password").value = ""; $("signinMsg").hidden = true; }
+$("signOut").addEventListener("click", () => sb.auth.signOut());
+
+sb.auth.onAuthStateChange((_event, session) => route(session));
+sb.auth.getSession().then(({ data }) => route(data.session));
+
+let routedFor = undefined;
+async function route(session) {
+  const key = session ? session.user.id : null;
+  if (key === routedFor) return;
+  routedFor = key;
+  if (!session) { show($("app"), false); show($("who"), false); show($("signin"), true); resetSignin(); return; }
+  const { data: owner } = await sb.rpc("is_owner");
+  if (!owner) {
+    await sb.auth.signOut();
+    show($("signin"), true);
+    note($("signinMsg"), "err", "This account isn't allowed to send announcements.");
+    return;
+  }
+  $("whoEmail").textContent = session.user.email;
+  show($("signin"), false); show($("who"), true); show($("app"), true);
+  refresh();
+}
+
+/* ===== Data ===== */
+async function refresh() {
+  const [{ data: count }, { data: list, error }] = await Promise.all([
+    sb.rpc("device_count"),
+    sb.from("announcements").select("*").order("sent_at", { ascending: false }).limit(50),
+  ]);
+  $("reachCount").textContent = typeof count === "number" ? count.toLocaleString() : "–";
+  renderHistory(error ? null : list || []);
+  const weekAgo = Date.now() - 7 * 864e5;
+  const recent = (list || []).filter((a) => new Date(a.sent_at).getTime() > weekAgo).length;
+  if (recent >= WEEKLY_SOFT_LIMIT) {
+    note($("weekWarn"), "warn", `You've sent ${recent} messages in the last 7 days. Too many alerts is the #1 reason people turn notifications off. Save this one for something that really matters?`);
+  } else $("weekWarn").hidden = true;
+}
+
+function renderHistory(list) {
+  const el = $("historyList");
+  if (list === null) { el.innerHTML = '<div class="empty">Couldn\'t load sent messages.</div>'; return; }
+  if (!list.length) { el.innerHTML = '<div class="empty">Nothing sent yet. Your first message will show up here.</div>'; return; }
+  el.innerHTML = list.map((a) => `
+    <div class="h-item">
+      ${a.image_url ? `<img class="thumb" src="${esc(a.image_url)}" alt="">` : '<div class="thumb">✉</div>'}
+      <div>
+        <b>${esc(a.title)}</b>
+        <p>${esc(a.body)}</p>
+        <small>${new Date(a.sent_at).toLocaleString([], { dateStyle: "medium", timeStyle: "short" })} · reached ${a.delivered} of ${a.recipients} phones</small>
+      </div>
+      <button class="btn btn-ghost btn-sm" data-del="${a.id}" title="Removes it from the app's News screen">Remove</button>
+    </div>`).join("");
+}
+$("historyList").addEventListener("click", async (e) => {
+  const id = e.target.closest("[data-del]")?.getAttribute("data-del");
+  if (!id) return;
+  const yes = await ask("Remove this message?", "It will disappear from the News screen in the app. Notifications already delivered stay on people's phones.", "Remove");
+  if (!yes) return;
+  await sb.from("announcements").delete().eq("id", id);
+  refresh();
+});
+
+/* ===== Compose + live preview ===== */
+["title", "body", "link"].forEach((id) => $(id).addEventListener("input", updatePreview));
+function updatePreview() {
+  const t = $("title").value.trim(), b = $("body").value.trim(), l = $("link").value.trim();
+  $("titleCount").textContent = `${$("title").value.length}/80`;
+  $("bodyCount").textContent = `${$("body").value.length}/1000`;
+  $("pvTitle").innerHTML = t ? esc(t) : '<span class="placeholder">Your title</span>';
+  $("pvBody").innerHTML = b ? esc(b) : '<span class="placeholder">Your message</span>';
+  $("pvNewsTitle").textContent = t || "Your title"; $("pvNewsTitle").className = t ? "" : "placeholder";
+  $("pvNewsBody").textContent = b || "Your message"; $("pvNewsBody").className = b ? "" : "placeholder";
+  show($("pvNewsLink"), !!l);
+  [$("pvImg"), $("pvNewsImg")].forEach((img) => { if (photoPreviewUrl) { img.src = photoPreviewUrl; img.hidden = false; } else img.hidden = true; });
+}
+function tick() { $("pvTime").textContent = new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }).replace(/\s?[AP]M/i, ""); }
+tick(); setInterval(tick, 30000);
+
+/* Photo: shrink big phone photos before upload */
+$("photoDrop").addEventListener("click", () => $("photo").click());
+$("photoDrop").addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); $("photo").click(); } });
+$("photo").addEventListener("change", async () => {
+  const f = $("photo").files[0];
+  if (!f) return;
+  try {
+    photoFile = await shrink(f, 1600, 0.85);
+  } catch {
+    note($("composeMsg"), "err", "That photo couldn't be read. Try a JPG or PNG.");
+    return;
+  }
+  if (photoPreviewUrl) URL.revokeObjectURL(photoPreviewUrl);
+  photoPreviewUrl = URL.createObjectURL(photoFile);
+  $("photoThumb").src = photoPreviewUrl; show($("photoThumb"), true);
+  $("photoText").textContent = "Photo added. Tap to change it.";
+  show($("removePhoto"), true);
+  updatePreview();
+});
+$("removePhoto").addEventListener("click", clearPhoto);
+function clearPhoto() {
+  photoFile = null; if (photoPreviewUrl) URL.revokeObjectURL(photoPreviewUrl); photoPreviewUrl = null;
+  $("photo").value = ""; show($("photoThumb"), false); show($("removePhoto"), false);
+  $("photoText").textContent = "Add a photo, like the new shoes or a flyer";
+  updatePreview();
+}
+function shrink(file, maxSide, quality) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, maxSide / Math.max(img.width, img.height));
+      const c = document.createElement("canvas");
+      c.width = Math.round(img.width * scale); c.height = Math.round(img.height * scale);
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      c.toBlob((b) => (b ? resolve(b) : reject()), "image/jpeg", quality);
+      URL.revokeObjectURL(img.src);
+    };
+    img.onerror = reject;
+    img.src = URL.createObjectURL(file);
+  });
+}
+
+$("clearBtn").addEventListener("click", clearForm);
+function clearForm() { $("compose").reset(); clearPhoto(); $("composeMsg").hidden = true; updatePreview(); }
+
+/* ===== Send ===== */
+$("compose").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (sending) return;
+  const title = $("title").value.trim(), body = $("body").value.trim(), link = $("link").value.trim();
+  if (!title || !body) { note($("composeMsg"), "err", "Add a title and a message first."); return; }
+  if (link && !/^https:\/\//i.test(link)) { note($("composeMsg"), "err", "The link needs to start with https://"); return; }
+  const n = $("reachCount").textContent;
+  const yes = await ask("Send it?", `This goes out right away to ${n} phones and appears in the app's News screen. It can't be unsent.`, "Send now");
+  if (!yes) return;
+
+  sending = true; $("sendBtn").disabled = true; $("sendBtn").textContent = "Sending…";
+  try {
+    let image_url = null;
+    if (photoFile) {
+      const path = `${new Date().toISOString().slice(0, 10)}/${crypto.randomUUID()}.jpg`;
+      const { error: upErr } = await sb.storage.from(BUCKET).upload(path, photoFile, { contentType: "image/jpeg", cacheControl: "31536000" });
+      if (upErr) throw new Error("The photo didn't upload. Try again, or send without it.");
+      image_url = sb.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
+    }
+    const { data, error } = await sb.functions.invoke("send-announcement", { body: { title, body, link_url: link || null, image_url } });
+    if (error) {
+      let msg = "Something went wrong sending. Nothing was sent.";
+      try { const j = await error.context.json(); if (j && j.error) msg = j.error; } catch {}
+      throw new Error(msg);
+    }
+    clearForm();
+    note($("composeMsg"), "ok", `Sent! Delivered to ${data.delivered} of ${data.recipients} phones. It's also in the app's News screen.`);
+    refresh();
+  } catch (err) {
+    note($("composeMsg"), "err", err.message || "Something went wrong sending.");
+  } finally {
+    sending = false; $("sendBtn").disabled = false; $("sendBtn").textContent = "Send to customers";
+  }
+});
+
+/* Confirm sheet (no browser pop-ups) */
+function ask(title, text, yesLabel) {
+  return new Promise((resolve) => {
+    $("confirmTitle").textContent = title; $("confirmText").textContent = text; $("confirmYes").textContent = yesLabel;
+    show($("confirm"), true); $("confirmYes").focus();
+    const done = (v) => { show($("confirm"), false); $("confirmYes").onclick = $("confirmNo").onclick = null; resolve(v); };
+    $("confirmYes").onclick = () => done(true);
+    $("confirmNo").onclick = () => done(false);
+  });
+}
+updatePreview();
+</script>
+</body>
+</html>
