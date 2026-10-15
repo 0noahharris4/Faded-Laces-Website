@@ -217,14 +217,25 @@ textarea.field { resize: vertical; min-height: 120px; line-height: 1.5; }
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
+/* Backup copy of the Supabase library, in case the first source is blocked. */
+if (!window.supabase) document.write('<script src="https://unpkg.com/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"><\/script>');
+</script>
+<script>
 /* ===== Settings ===== */
 const SUPABASE_URL = "https://zrjxmmozwhspkcfgktiq.supabase.co";
 const SUPABASE_KEY = "sb_publishable_gP9zNXvJtQFDFQCBDV7CpA_xF_xvXRc"; // publishable key: safe to be public
 const BUCKET = "announcement-images";
 const WEEKLY_SOFT_LIMIT = 3;
 
-const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const $ = (id) => document.getElementById(id);
+if (!window.supabase) {
+  document.getElementById("signin").hidden = false;
+  const m = document.getElementById("signinMsg");
+  m.className = "msg err"; m.hidden = false;
+  m.textContent = "The dashboard couldn't load. Check your internet connection, turn off any ad blocker for this page, then refresh.";
+  throw new Error("supabase-js failed to load");
+}
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 let photoFile = null, photoPreviewUrl = null, sending = false;
 
 function show(el, on) { el.hidden = !on; }
@@ -244,8 +255,17 @@ $("loginForm").addEventListener("submit", async (e) => {
 function resetSignin() { $("password").value = ""; $("signinMsg").hidden = true; }
 $("signOut").addEventListener("click", () => sb.auth.signOut());
 
-sb.auth.onAuthStateChange((_event, session) => route(session));
-sb.auth.getSession().then(({ data }) => route(data.session));
+// Run routing outside the auth callback: making Supabase calls inside it can freeze the page.
+sb.auth.onAuthStateChange((_event, session) => { setTimeout(() => route(session), 0); });
+sb.auth.getSession().then(({ data }) => route(data.session)).catch(() => route(null));
+
+// Safety net: never leave the page blank.
+setTimeout(() => {
+  if ($("signin").hidden && $("app").hidden) {
+    show($("signin"), true);
+    note($("signinMsg"), "err", "Still connecting… If this doesn't clear, refresh the page or sign in again.");
+  }
+}, 8000);
 
 let routedFor = undefined;
 async function route(session) {
@@ -253,7 +273,17 @@ async function route(session) {
   if (key === routedFor) return;
   routedFor = key;
   if (!session) { show($("app"), false); show($("who"), false); show($("signin"), true); resetSignin(); return; }
-  const { data: owner } = await sb.rpc("is_owner");
+  let owner = false;
+  try {
+    const res = await sb.rpc("is_owner");
+    if (res.error) throw res.error;
+    owner = res.data;
+  } catch {
+    routedFor = undefined;
+    show($("app"), false); show($("signin"), true);
+    note($("signinMsg"), "err", "Couldn't reach the server. Check your connection and refresh the page.");
+    return;
+  }
   if (!owner) {
     await sb.auth.signOut();
     show($("signin"), true);
@@ -267,10 +297,14 @@ async function route(session) {
 
 /* ===== Data ===== */
 async function refresh() {
-  const [{ data: count }, { data: list, error }] = await Promise.all([
-    sb.rpc("device_count"),
-    sb.from("announcements").select("*").order("sent_at", { ascending: false }).limit(50),
-  ]);
+  let count = null, list = null, error = null;
+  try {
+    const [c, l] = await Promise.all([
+      sb.rpc("device_count"),
+      sb.from("announcements").select("*").order("sent_at", { ascending: false }).limit(50),
+    ]);
+    count = c.data; list = l.data; error = l.error;
+  } catch (e) { error = e; }
   $("reachCount").textContent = typeof count === "number" ? count.toLocaleString() : "–";
   renderHistory(error ? null : list || []);
   const weekAgo = Date.now() - 7 * 864e5;
