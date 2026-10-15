@@ -76,7 +76,7 @@ footer a { color: var(--muted); }
 <main>
   <p class="kicker">Legal</p>
   <h1>Privacy Policy</h1>
-  <p class="updated">Effective date: September 28, 2026</p>
+  <p class="updated">Effective date: October 15, 2026</p>
 
   <div class="summary">
     <p><strong>The short version:</strong> we only collect the information you choose to give us when you place an apparel order: your name, phone number, and (if you add it) your email. We use it to confirm and fulfill your order. We don't sell it, we don't use it for ads, and the app doesn't track your location.</p>
@@ -99,6 +99,12 @@ footer a { color: var(--muted); }
   <h3>Information stored only on your device</h3>
   <p>Your shopping cart is saved on your own phone (in the app) or in your browser (on the website) so it's still there when you come back. This stays on your device and is not sent to us unless you place an order.</p>
 
+  <h3>Appointment reminders</h3>
+  <p>If you set an appointment reminder in the app, it is scheduled on your own phone. Reminder details are not sent to us.</p>
+
+  <h3>Drop alerts and shop news (optional)</h3>
+  <p>If you turn on "Drop alerts" in the app, your phone gives the app a push notification token, a random identifier that lets us deliver notifications to that phone. We store this token so we can send you news about drops, restocks and the shop. It is not linked to your name, email, phone number or orders. You can turn alerts off at any time in the app's News tab or in your phone's settings; turning them off in the app removes your token from our list.</p>
+
   <h3>What we don't collect</h3>
   <ul>
     <li>We don't require an account or login.</li>
@@ -120,6 +126,8 @@ footer a { color: var(--muted); }
   <p>We rely on a few trusted services to run the website and app:</p>
   <ul>
     <li><strong>Formspree</strong> delivers orders placed in the app and on the website to the shop's email. Formspree processes your order information for this purpose only and keeps a copy of submissions for a limited time.</li>
+    <li><strong>Supabase</strong> stores shop announcements and the notification tokens of phones that turned on alerts.</li>
+    <li><strong>Expo</strong> (with Apple and Google's push notification services) delivers notifications to phones that turned on alerts.</li>
     <li><strong>Google Maps</strong> displays the map of our location. When the map loads, Google may receive standard technical information (such as your IP address) under its own privacy policy.</li>
     <li><strong>Google Fonts</strong> provides the fonts on our website.</li>
     <li><strong>Booksy</strong> handles appointment booking. Tapping "Book" takes you to Booksy, and anything you enter there is governed by Booksy's privacy policy.</li>
@@ -134,6 +142,7 @@ footer a { color: var(--muted); }
   <h2>Your choices</h2>
   <ul>
     <li>Providing your email when ordering is optional.</li>
+    <li>Drop alerts are off unless you turn them on, and you can turn them off at any time.</li>
     <li>You can clear your cart at any time, or delete the app to remove anything stored on your phone.</li>
     <li>You can ask us to access, correct, or delete the information we have about you by contacting us below.</li>
   </ul>
