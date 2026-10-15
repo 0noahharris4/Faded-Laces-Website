@@ -5,6 +5,58 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Faded Laces Barbershop &amp; Shoe Store | Newport, KY</title>
 <meta name="description" content="Faded Laces Barbershop &amp; Shoe Store — Newport, Kentucky's first and only barbershop/shoe store. Fresh fades, fresh kicks, and Faded Laces Apparel.">
+<link rel="canonical" href="https://fadedlaces.com/">
+
+<!-- Link previews (Facebook, iMessage, LinkedIn, X, etc.) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Faded Laces">
+<meta property="og:title" content="Faded Laces Barbershop &amp; Shoe Store | Newport, KY">
+<meta property="og:description" content="Fresh fades. Fresh kicks. Northern Kentucky's first &amp; only barbershop and shoe store. Book online and save up to 10%.">
+<meta property="og:url" content="https://fadedlaces.com/">
+<meta property="og:image" content="https://fadedlaces.com/photo-09.jpg">
+<meta property="og:image:alt" content="Faded Laces and SNKR DEPT storefront at 621 Monmouth St, Newport, KY">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Faded Laces Barbershop &amp; Shoe Store | Newport, KY">
+<meta name="twitter:description" content="Fresh fades. Fresh kicks. Northern Kentucky's first &amp; only barbershop and shoe store.">
+<meta name="twitter:image" content="https://fadedlaces.com/photo-09.jpg">
+
+<!-- Business info for Google Search & Maps -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": ["HairSalon", "ShoeStore"],
+  "@id": "https://fadedlaces.com/#business",
+  "name": "Faded Laces Barbershop & Shoe Store",
+  "description": "Northern Kentucky's first and only barbershop and shoe store. Haircuts, beard trims and shaves, plus sneakers to buy, sell and trade, and Faded Laces Apparel.",
+  "url": "https://fadedlaces.com/",
+  "image": "https://fadedlaces.com/photo-09.jpg",
+  "logo": "https://fadedlaces.com/photo-01.jpg",
+  "telephone": "+1-859-638-0096",
+  "email": "fadedlaces@outlook.com",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "621 Monmouth St",
+    "addressLocality": "Newport",
+    "addressRegion": "KY",
+    "postalCode": "41071",
+    "addressCountry": "US"
+  },
+  "hasMap": "https://www.google.com/maps?q=621+Monmouth+St,+Newport,+KY+41071",
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "10:00", "closes": "18:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "10:00", "closes": "19:00" }
+  ],
+  "sameAs": ["https://www.instagram.com/fadedlacesllc/"],
+  "potentialAction": {
+    "@type": "ReserveAction",
+    "target": "https://booksy.com/en-us/1455377_faded-laces-newport-ky_barber-shop_20834_newport",
+    "name": "Book an appointment"
+  }
+}
+</script>
+
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="icon" type="image/jpeg" href="photo-01.jpg">
 <style>
@@ -423,6 +475,34 @@ img { display: block; max-width: 100%; }
 .qty-stepper-sm .qty-btn { width: 24px; height: 24px; font-size: 0.9rem; }
 .qty-display { min-width: 20px; text-align: center; font-size: 0.85rem; font-weight: 700; color: var(--white); }
 
+/* Size picker */
+.size-picker { margin: -0.2rem 0 1rem; }
+.size-label { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.45rem; }
+.size-label strong { color: var(--white); font-weight: 700; }
+.size-options { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.size-btn {
+  min-width: 42px;
+  height: 34px;
+  padding: 0 0.6rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--black);
+  color: var(--white);
+  font-family: "Inter", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.size-btn:hover { border-color: var(--green); }
+.size-btn.active { background: var(--green); border-color: var(--green); color: var(--black); }
+.size-picker.needs-size .size-options { animation: size-nudge 0.35s ease; }
+.size-picker.needs-size .size-label { color: #ff5a5a; }
+@keyframes size-nudge { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+.size-note { font-size: 0.78rem; color: var(--muted); margin: -0.2rem 0 1rem; }
+.cart-item-size { color: var(--green); font-size: 0.75rem; font-weight: 700; margin-bottom: 0.15rem; }
+.footer-credit a { color: var(--muted); }
+
 /* Cart drawer */
 .cart-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 190; }
 .cart-drawer {
@@ -566,7 +646,7 @@ img { display: block; max-width: 100%; }
 .footer-col a:hover { color: var(--green); }
 .footer-bottom a { color: var(--muted); text-decoration: underline; }
 .footer-bottom a:hover { color: var(--green); }
-.footer-bottom { text-align: center; padding: 1.3rem 1.5rem; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--muted); }
+.footer-bottom { text-align: center; padding: 1.3rem 1.5rem; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--muted); display: flex; flex-direction: column; gap: 0.4rem; }
 
 /* ===== Responsive ===== */
 @media (max-width: 980px) {
@@ -802,6 +882,16 @@ img { display: block; max-width: 100%; }
         <h3>Black Hoodie</h3>
         <p class="svc-desc">A premium hoodie with a classic look. Organic and recycled fabrics blend beautifully, offering cozy warmth with refined details that stand out from the crowd.</p>
         <p class="price"><span class="now">$60.00</span></p>
+        <div class="size-picker">
+          <span class="size-label">Size: <strong class="size-current">Select a size</strong></span>
+          <div class="size-options">
+            <button type="button" class="size-btn" data-size="S">S</button>
+            <button type="button" class="size-btn" data-size="M">M</button>
+            <button type="button" class="size-btn" data-size="L">L</button>
+            <button type="button" class="size-btn" data-size="XL">XL</button>
+            <button type="button" class="size-btn" data-size="2XL">2XL</button>
+          </div>
+        </div>
         <div class="qty-row">
           <div class="qty-stepper">
             <button type="button" class="qty-btn" data-action="dec" aria-label="Decrease quantity">&minus;</button>
@@ -819,6 +909,16 @@ img { display: block; max-width: 100%; }
         <h3>Black Joggers</h3>
         <p class="svc-desc">A premium jogger with a classic look. Organic and recycled fabrics blend beautifully, offering cozy warmth with refined details that stand out from the crowd.</p>
         <p class="price"><span class="now">$62.00</span></p>
+        <div class="size-picker">
+          <span class="size-label">Size: <strong class="size-current">Select a size</strong></span>
+          <div class="size-options">
+            <button type="button" class="size-btn" data-size="S">S</button>
+            <button type="button" class="size-btn" data-size="M">M</button>
+            <button type="button" class="size-btn" data-size="L">L</button>
+            <button type="button" class="size-btn" data-size="XL">XL</button>
+            <button type="button" class="size-btn" data-size="2XL">2XL</button>
+          </div>
+        </div>
         <div class="qty-row">
           <div class="qty-stepper">
             <button type="button" class="qty-btn" data-action="dec" aria-label="Decrease quantity">&minus;</button>
@@ -844,6 +944,16 @@ img { display: block; max-width: 100%; }
         <h3>"It's Just the Beginning" Tee</h3>
         <p class="svc-desc">Bella + Canvas 6oz. Heavyweight Tee. White with black print, left chest &amp; back.</p>
         <p class="price"><span class="now">$40.00</span></p>
+        <div class="size-picker">
+          <span class="size-label">Size: <strong class="size-current">Select a size</strong></span>
+          <div class="size-options">
+            <button type="button" class="size-btn" data-size="S">S</button>
+            <button type="button" class="size-btn" data-size="M">M</button>
+            <button type="button" class="size-btn" data-size="L">L</button>
+            <button type="button" class="size-btn" data-size="XL">XL</button>
+            <button type="button" class="size-btn" data-size="2XL">2XL</button>
+          </div>
+        </div>
         <div class="qty-row">
           <div class="qty-stepper">
             <button type="button" class="qty-btn" data-action="dec" aria-label="Decrease quantity">&minus;</button>
@@ -869,6 +979,16 @@ img { display: block; max-width: 100%; }
         <h3>"Setting a Standard" Tee</h3>
         <p class="svc-desc">Bella + Canvas 6oz. Heavyweight Tee. Solid black with white print, left chest &amp; back.</p>
         <p class="price"><span class="now">$40.00</span></p>
+        <div class="size-picker">
+          <span class="size-label">Size: <strong class="size-current">Select a size</strong></span>
+          <div class="size-options">
+            <button type="button" class="size-btn" data-size="S">S</button>
+            <button type="button" class="size-btn" data-size="M">M</button>
+            <button type="button" class="size-btn" data-size="L">L</button>
+            <button type="button" class="size-btn" data-size="XL">XL</button>
+            <button type="button" class="size-btn" data-size="2XL">2XL</button>
+          </div>
+        </div>
         <div class="qty-row">
           <div class="qty-stepper">
             <button type="button" class="qty-btn" data-action="dec" aria-label="Decrease quantity">&minus;</button>
@@ -900,6 +1020,7 @@ img { display: block; max-width: 100%; }
         <h3>Snapback Hat</h3>
         <p class="svc-desc">Trend-forward and built to make a statement — premium cotton twill with our bold Hi Pro Champ shape, a pinch front panel, and an adjustable Softsnap backstrap.</p>
         <p class="price"><span class="now">$30.00</span></p>
+        <p class="size-note">One size fits most · adjustable snapback</p>
         <div class="qty-row">
           <div class="qty-stepper">
             <button type="button" class="qty-btn" data-action="dec" aria-label="Decrease quantity">&minus;</button>
@@ -1012,6 +1133,7 @@ img { display: block; max-width: 100%; }
   </div>
   <div class="footer-bottom">
     <p>&copy; <span id="year"></span> Faded Laces Barbershop &amp; Shoe Store. All rights reserved. &middot; <a href="privacy.html">Privacy Policy</a></p>
+    <p class="footer-credit">Website by <a href="https://ocscomputing.com" target="_blank" rel="noopener">Optima Computer Systems</a></p>
   </div>
 </footer>
 
@@ -1062,12 +1184,24 @@ img { display: block; max-width: 100%; }
 
   /* ===== Apparel Cart ===== */
   var PRODUCTS = {
-    hoodie:          { name: 'Black Hoodie', price: 60.00 },
-    joggers:         { name: 'Black Joggers', price: 62.00 },
-    'tee-beginning': { name: '"It\'s Just the Beginning" Tee', price: 40.00 },
-    'tee-standard':  { name: '"Setting a Standard" Tee', price: 40.00 },
-    snapback:        { name: 'Snapback Hat', price: 30.00 }
+    hoodie:          { name: 'Black Hoodie', price: 60.00, sized: true },
+    joggers:         { name: 'Black Joggers', price: 62.00, sized: true },
+    'tee-beginning': { name: '"It\'s Just the Beginning" Tee', price: 40.00, sized: true },
+    'tee-standard':  { name: '"Setting a Standard" Tee', price: 40.00, sized: true },
+    snapback:        { name: 'Snapback Hat', price: 30.00, sized: false }
   };
+
+  /* Cart keys are "productId" or "productId|SIZE" */
+  function parseKey(key) {
+    var parts = String(key).split('|');
+    return { id: parts[0], size: parts[1] || '' };
+  }
+  function isValidKey(key) {
+    var k = parseKey(key);
+    var p = PRODUCTS[k.id];
+    if (!p) return false;
+    return p.sized ? !!k.size : !k.size;
+  }
 
   var cart = {};
   try { cart = JSON.parse(localStorage.getItem('fl_cart') || '{}'); } catch (e) { cart = {}; }
@@ -1082,16 +1216,19 @@ img { display: block; max-width: 100%; }
     var itemsEl = document.getElementById('cart-items');
     var countEl = document.getElementById('cart-count');
     var subtotalEl = document.getElementById('cart-subtotal');
-    var ids = Object.keys(cart).filter(function (id) { return cart[id] > 0 && PRODUCTS[id]; });
+    var ids = Object.keys(cart).filter(function (id) { return cart[id] > 0 && isValidKey(id); });
     var totalQty = 0, subtotal = 0, html = '';
 
     ids.forEach(function (id) {
-      var p = PRODUCTS[id];
+      var k = parseKey(id);
+      var p = PRODUCTS[k.id];
       var qty = cart[id];
       totalQty += qty;
       subtotal += p.price * qty;
       html += '<div class="cart-item" data-id="' + id + '">' +
-        '<div class="cart-item-info"><p class="cart-item-name">' + p.name + '</p><p class="cart-item-price">' + money(p.price) + ' each</p></div>' +
+        '<div class="cart-item-info"><p class="cart-item-name">' + p.name + '</p>' +
+          (k.size ? '<p class="cart-item-size">Size ' + k.size + '</p>' : '') +
+          '<p class="cart-item-price">' + money(p.price) + ' each</p></div>' +
         '<div class="cart-item-controls">' +
           '<div class="qty-stepper qty-stepper-sm">' +
             '<button type="button" class="qty-btn" data-cart-action="dec" data-id="' + id + '" aria-label="Decrease quantity">&minus;</button>' +
@@ -1140,6 +1277,24 @@ img { display: block; max-width: 100%; }
       });
     });
 
+    var picker = card.querySelector('.size-picker');
+    var selectedSize = '';
+    if (picker) {
+      var sizeBtns = picker.querySelectorAll('.size-btn');
+      var sizeCurrent = picker.querySelector('.size-current');
+      sizeBtns.forEach(function (sb) {
+        sb.setAttribute('aria-pressed', 'false');
+        sb.addEventListener('click', function () {
+          selectedSize = sb.getAttribute('data-size');
+          sizeBtns.forEach(function (b) { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+          sb.classList.add('active');
+          sb.setAttribute('aria-pressed', 'true');
+          sizeCurrent.textContent = selectedSize;
+          picker.classList.remove('needs-size');
+        });
+      });
+    }
+
     var qtyInput = card.querySelector('.qty-input');
     card.querySelector('[data-action="inc"]').addEventListener('click', function () {
       qtyInput.value = Math.min(10, (parseInt(qtyInput.value, 10) || 1) + 1);
@@ -1150,7 +1305,14 @@ img { display: block; max-width: 100%; }
     card.querySelector('.add-to-cart-btn').addEventListener('click', function () {
       var id = card.getAttribute('data-id');
       var qty = Math.max(1, parseInt(qtyInput.value, 10) || 1);
-      addToCart(id, qty);
+      if (picker && !selectedSize) {
+        picker.classList.remove('needs-size');
+        void picker.offsetWidth; /* restart the nudge animation */
+        picker.classList.add('needs-size');
+        picker.querySelector('.size-current').textContent = 'Please choose a size';
+        return;
+      }
+      addToCart(selectedSize ? id + '|' + selectedSize : id, qty);
       var btnEl = this;
       var original = btnEl.textContent;
       btnEl.textContent = 'Added!';
@@ -1184,14 +1346,15 @@ img { display: block; max-width: 100%; }
   }
 
   function buildOrder() {
-    var ids = Object.keys(cart).filter(function (id) { return cart[id] > 0 && PRODUCTS[id]; });
+    var ids = Object.keys(cart).filter(function (id) { return cart[id] > 0 && isValidKey(id); });
     var lines = [], subtotal = 0;
     ids.forEach(function (id) {
-      var p = PRODUCTS[id];
+      var k = parseKey(id);
+      var p = PRODUCTS[k.id];
       var qty = cart[id];
       var lineTotal = p.price * qty;
       subtotal += lineTotal;
-      lines.push(qty + ' x ' + p.name + ' - ' + money(lineTotal));
+      lines.push(qty + ' x ' + p.name + (k.size ? ' (Size ' + k.size + ')' : '') + ' - ' + money(lineTotal));
     });
     return {
       count: ids.length,
